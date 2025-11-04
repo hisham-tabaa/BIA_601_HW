@@ -1,122 +1,39 @@
-{% extends 'base.html' %}
-{% block title %}نتائج التحليل - اختيار الميزات{% endblock %}
-{% block content %}
-  <section class="results-hero">
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نتائج التحليل</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
     <div class="container">
-      <div class="results-header">
-        <h1>تم التحليل بنجاح!</h1>
-        <p>إليك نتائج تحليل بياناتك باستخدام الخوارزمية الجينية</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-card primary">
-          <div class="stat-content">
-            <h3>اسم الملف</h3>
-            <p class="stat-value">{{ filename }}</p>
-          </div>
-        </div>
-        <div class="stat-card success">
-          <div class="stat-content">
-            <h3>عدد الميزات المختارة</h3>
-            <p class="stat-value">{{ results['GA'].n_features }}</p>
-          </div>
-        </div>
-        <div class="stat-card info">
-          <div class="stat-content">
-            <h3>دقة الخوارزمية الجينية</h3>
-            <p class="stat-value">{{ "%.2f"|format(results['GA'].accuracy * 100) }}%</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="results-section">
-        <div class="section-title">
-          <h2>الميزات المختارة بواسطة الخوارزمية الجينية</h2>
-          <p>هذه هي أفضل الميزات التي تم اختيارها من بياناتك</p>
-        </div>
-        <div class="chips-container">
-          {% if selected_features %}
+        <h1>نتائج اختيار الميزات</h1>
+        <h2>الميزات المختارة بواسطة الخوارزمية الجينية:</h2>
+        <ul>
             {% for feat in selected_features %}
-              <span class="chip-modern">
-                {{ feat }}
-              </span>
+                <li>{{ feat }}</li>
             {% endfor %}
-          {% else %}
-            <div class="empty-state">
-              <p>لم يتم اختيار أي ميزة. جرّب زيادة عدد الأجيال أو حجم السكان.</p>
-            </div>
-          {% endif %}
-        </div>
-      </div>
+        </ul>
 
-      <div class="results-section">
-        <div class="section-title">
-          <h2>مقارنة الأداء</h2>
-          <p>مقارنة شاملة بين الخوارزمية الجينية والطرق التقليدية</p>
-        </div>
-        
-        <div class="comparison-cards">
-          {% for method, data in results.items() %}
-            <div class="comparison-card ">
-           
-              <div class="method-header">
-                <h3>{{ method }}</h3>
-              </div>
-              <div class="method-stats">
-                <div class="method-stat">
-                  <span class="stat-label">عدد الميزات</span>
-                  <span class="stat-number">{{ data.n_features }}</span>
-                </div>
-                <div class="method-stat">
-                  <span class="stat-label">الدقة</span>
-                  <span class="stat-number accuracy">{{ "%.2f"|format(data.accuracy * 100) }}%</span>
-                </div>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ data.accuracy * 100 }}%"></div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <div class="table-container">
-          <table class="modern-table">
-            <thead>
-              <tr>
+        <h2>مقارنة الأداء:</h2>
+        <table border="1">
+            <tr>
                 <th>الطريقة</th>
                 <th>عدد الميزات</th>
                 <th>الدقة</th>
-               
-              </tr>
-            </thead>
-            <tbody>
-              {% for method, data in results.items() %}
-                <tr class="{% if method == 'GA' %}highlight-row{% endif %}">
-                  <td>
-                    <span class="method-badge {% if method == 'GA' %}primary{% else %}secondary{% endif %}">
-                      {{ method }}
-                    </span>
-                  </td>
-                  <td><strong>{{ data.n_features }}</strong></td>
-                  <td><strong>{{ "%.2f"|format(data.accuracy * 100) }}%</strong></td>
-                
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </tr>
+            {% for method, data in results.items() %}
+            <tr>
+                <td>{{ method }}</td>
+                <td>{{ data.n_features }}</td>
+                <td>{{ "%.2f"|format(data.accuracy * 100) }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
 
-      <div class="actions-section">
-        <a class="btn btn-primary btn-large" href="/">
-          تحليل ملف جديد
-        </a>
-       
-      </div>
+        <br>
+        <a href="/">← رفع ملف جديد</a>
     </div>
-  </section>
-{% endblock %}
+</body>
+</html>
