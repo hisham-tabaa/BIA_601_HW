@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}اختيار الميزات{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-wrap">
+               <nav class="nav-links" id="primary-nav">
+                <a href="/">الرئيسية</a>
+                <a href="#how">كيف يعمل؟</a>
+            </nav>
+            <button class="nav-toggle" id="nav-toggle" aria-label="فتح/إغلاق القائمة" aria-controls="primary-nav" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <a class="brand" href="/">
+                <span>BIA HW</span>
+            </a>
+         
+        </div>
+    </header>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>Feature Selection</h4>
+                <p>اختيار الميزات باستخدام الخوارزميات الجينية</p>
+            </div>
+            <div class="footer-section">
+                <h4>روابط سريعة</h4>
+                <a href="/">الرئيسية</a>
+                <a href="#how">كيف يعمل؟</a>
+            </div>
+          
+        </div>
+    </footer>
+    <script>
+    (function() {
+        var toggle = document.getElementById('nav-toggle');
+        var nav = document.getElementById('primary-nav');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var isOpen = nav.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                document.body.classList.toggle('nav-open', isOpen);
+            });
+        }
+        // File input feedback
+        var fileInput = document.getElementById('file-upload');
+        if (fileInput) {
+            var fileLabel = document.querySelector('label[for="file-upload"]');
+            var labelSpan = fileLabel ? fileLabel.querySelector('span') : null;
+            fileInput.addEventListener('change', function() {
+                if (!fileLabel || !labelSpan) return;
+                if (fileInput.files && fileInput.files.length > 0) {
+                    var name = fileInput.files[0].name;
+                    labelSpan.textContent = 'تم اختيار: ' + name;
+                    fileLabel.classList.add('selected');
+                } else {
+                    labelSpan.textContent = 'اختر ملف CSV';
+                    fileLabel.classList.remove('selected');
+                }
+            });
+        }
+        // Submit loading state
+        var uploadForm = document.querySelector('form.upload-form');
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', function() {
+                var submitBtn = uploadForm.querySelector('button[type="submit"]');
+                if (!submitBtn) return;
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+                submitBtn.dataset.originalText = submitBtn.textContent;
+                submitBtn.textContent = 'جارٍ التحميل...';
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}الرئيسية - اختيار الميزات{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+    
+        <h1 class="hero-title">اختيار الميزات <br><span class="gradient-text">بالخوارزميات الجينية</span></h1>
+        <p class="hero-desc"> اختيار الميزات الهامة عبر الخوارزمية الجينية مع مقارنة النتائج مع طرق تقليدية مثل ANOVA وLasso وPCA </p>
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert-box">
+              {% for message in messages %}
+                <p> {{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        
+        <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+          <div class="file-upload-wrapper">
+            <input class="file-input" type="file" name="file" id="file-upload" accept=".csv" required>
+            <label for="file-upload" class="file-label">
+              <span>اختر ملف CSV</span>
+            </label>
+          </div>
+          <button class="btn btn-primary" style="background:#231051" type="submit">
+            ابدأ التحليل الآن
+          </button>
+        </form>
+        <p class="hint"> صيغة الملف: آخر عمود هو الهدف (Target)، والأعمدة السابقة ميزات رقمية</p>
+      </div>
+      <div class="hero-art">
+        <img src="{{ url_for('static', filename='genetic-algorithm.svg') }}" alt="Genetic Algorithm" class="hero-illustration">
+      </div>
+    </div>
+  </section>
+  <!-- Waves Separator Start (just below hero) -->
+  <div class="wave-footer">
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+      </defs>
+      <g class="parallax">
+        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <!-- Waves Separator End -->
+
+  <section id="how" class="section" style="background: white;">
+    <div class="container">
+      <div class="section-header">
+        <h2>كيف يعمل النظام؟</h2>
+        <p>عملية بسيطة من ثلاث خطوات للحصول على أفضل النتائج</p>
+      </div>
+      <div class="process-cards">
+        <div class="process-card">
+          <div class="process-number" style="background:#231051">1</div>
+          <h3>رفع البيانات</h3>
+          <p>قم برفع ملف CSV يحتوي على بياناتك. سنقوم بقراءته وتقسيمه تلقائياً إلى مجموعات تدريب واختبار مع تطبيق المعايرة القياسية.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-number" style="background:#231051">2</div>
+          <h3>الخوارزمية الجينية</h3>
+          <p>نستخدم خوارزمية جينية متطورة للبحث عن أفضل مجموعة ميزات عبر التطور السكاني والتزاوج والطفرات الذكية.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-number" style="background:#231051">3</div>
+          <h3>المقارنة والنتائج</h3>
+          <p>نقارن أداء الخوارزمية الجينية مع طرق تقليدية (ANOVA، Lasso، PCA) ونعرض لك النتائج بشكل واضح ومفصّل.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
